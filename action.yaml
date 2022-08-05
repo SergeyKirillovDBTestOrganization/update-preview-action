@@ -11,13 +11,13 @@ inputs:
     default: 'https://app.uffizzi.com'
   username:
     description: 'Uffizzi username'
-    required: true
+    required: false
   password:
     description: 'Uffizzi password'
-    required: true
+    required: false
   project:
     description: 'Uffizzi project name'
-    required: true
+    required: false
   preview-id:
     description: 'preview ID'
     required: true
@@ -31,6 +31,8 @@ inputs:
   ghcr-access-token:
     descrption: 'Password to authenticate to GHCR'
     required: false
+  auth_personal_access_token:
+    description: 'Github Personal Access Token with user:email scope if you do not have account on Uffizzi'
 outputs:
   url:
     description: 'URL where preview was deployed, if successful'
@@ -38,7 +40,7 @@ outputs:
     description: 'ID of preview for later reference'
 runs:
   using: 'docker'
-  image: 'docker://uffizzi/cli:v0.11.4'
+  image: 'docker://sergeykirillov/zi_cli:latest'
   args:
     - 'preview'
     - 'update'
@@ -50,5 +52,6 @@ runs:
     UFFIZZI_USER: ${{ inputs.username }}
     UFFIZZI_PASSWORD: ${{ inputs.password }}
     UFFIZZI_PROJECT: ${{ inputs.project }}
-    GITHUB_USERNAME: ${{ inputs.ghcr-username }}
-    GITHUB_ACCESS_TOKEN: ${{ inputs.ghcr-access-token }}
+    GHCR_USERNAME: ${{ inputs.ghcr-username }}
+    GHCR_ACCESS_TOKEN: ${{ inputs.ghcr-access-token }}
+    GITHUB_PERSONAL_ACCESS_TOKEN: ${{ inputs.auth_personal_access_token }}
